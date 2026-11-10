@@ -16,7 +16,12 @@
     outline-offset: 2px;
   }
 }
-
+#student-grid{
+  display: inline;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 0.5fr));
+  
+  
+}
 .hero {
   position: relative;
 
