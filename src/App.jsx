@@ -1,8 +1,10 @@
 import './App.css'
 import StudentCard from './Components/Student-Card'
+import StudentForm from './Components/StudentForm'
 import { useState } from 'react'
 
 function App() {
+  const [etudiantAModifier  , setEtudiantAModifier] = useState(null);
   const [etudiants, setEtudiants] = useState([
     {id: 1,
       nom:"jemni",
@@ -15,22 +17,23 @@ function App() {
     ville:"gabes",
     img: "../1790966170270.png"}
   ]);
-  function ajouterEtudiant() {
+  function enregisterModification(etudiantModifie) {
+    setEtudiants((actual) =>
+      actual.map((etudiant) =>
+        etudiant.id === etudiantModifie.id ? {...etudiantModifie}:etudiant
+      )
+    );
+    setEtudiantAModifier(null);
+  }
+  function modifierEtudiant(etudiant){
+    setEtudiantAModifier(etudiant);
+  }
+  function ajouterEtudiant(nouvelEtudiant) {
     const nouveauEtudiant = {
-      id: etudiants.length > 0
-        ? Math.max(...etudiants.map(etudiant => etudiant.id)) + 1
-        : 1,
-      nom: "Doe",
-      prenom: "John",
-      Email: "john.doe@example.com",
-      Tel: "+216 12345678",
-      filier: "GLSI",
-      annee: "2eme anneé",
-      groupe: "A",
-      ville: "Tunis",
-      img: "../1790966170270.png"
+      ...nouvelEtudiant,
+      id: Date.now(),
     };
-    setEtudiants([...etudiants, nouveauEtudiant]);
+    setEtudiants((actual) => [...actual, nouveauEtudiant]);
   }
   function supprimerEtudiant(id) {
     setEtudiants(etudiants.filter(etudiant => etudiant.id !== id));}
@@ -44,11 +47,19 @@ function App() {
           
         </div>
         <div className='actions'>
-        <button onClick={ajouterEtudiant}>Ajouter un etudiant</button>
+        <button type="button" onClick={() => document.getElementById('student-form')?.scrollIntoView()}>
+          Ajouter un etudiant
+        </button>
         
       </div> 
       
       </header>
+      <StudentForm
+        key={etudiantAModifier?.id || 'new'}
+        onCreate={ajouterEtudiant}
+        onUpdate={enregisterModification}
+        etudiantAModifier={etudiantAModifier}
+      />
       <div id='container'>
       <section className="student-grid" aria-label="Liste des étudiants">
       {etudiants.map((etudiant) => (
@@ -64,7 +75,8 @@ function App() {
           groupe={etudiant.groupe}
           ville={etudiant.ville}
           img={etudiant.img}
-          onSupprimer= {supprimerEtudiant}
+          onModifier={modifierEtudiant}
+          onSupprimer={supprimerEtudiant}
         />
         
         

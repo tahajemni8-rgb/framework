@@ -1,0 +1,21 @@
+label{
+   color: black;
+    margin: 20px;
+    display: inline-block;
+    width: 80px;
+}
+input .text .file{
+  display: inline-block;
+  border: 1px solid #050505;
+}
+table{
+  width: 800px;
+  margin: auto;
+  
+}
+
+.form-error{
+  display: block;
+  color: #b42318;
+  margin: 4px 20px;
+}

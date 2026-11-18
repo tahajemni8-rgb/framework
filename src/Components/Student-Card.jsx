@@ -2,7 +2,7 @@ import './Student-Card.css'
 import { useState } from 'react'
 
 function StudentCard(
-  { id, nom, prenom, Email, Tel, filier, annee, groupe, ville, img, onSupprimer },
+  { id, nom, prenom, Email, Tel, filier, annee, groupe, ville, img, onSupprimer,onModifier },
   
 ) {
   const [coordonnees, setCoordonnees] = useState(false);
@@ -37,6 +37,7 @@ function StudentCard(
             afficher / masquer
         </button>
         <button onClick={() => onSupprimer(id)}> delete</button>
+        <button onClick={() => onModifier({id , nom, prenom, Email, Tel, filier, annee, groupe, ville, img })}> modifier</button>
         
   
         <br />
